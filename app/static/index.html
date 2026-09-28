@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+      ProjectFlow
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">
+            PF
+          </div>
+          ProjectFlow
+        </div>
+        <div class="nav-title">
+          Workspace
+        </div>
+        <nav class="nav">
+          <button class="active" data-view="dashboard">
+            ▦
+            <span>
+              Dashboard
+            </span>
+          </button>
+          <button data-view="projects">
+            ◫
+            <span>
+              Project Management
+            </span>
+          </button>
+          <button data-view="tracking">
+            ◉
+            <span>
+              Status Tracking
+            </span>
+          </button>
+          <button data-view="sprints">
+            ◫
+            <span>
+              Sprint Management
+            </span>
+          </button>
+          <button data-view="team">
+            ◉
+            <span>
+              Team & Responsibility
+            </span>
+          </button>
+        </nav>
+        <div class="side-note">
+          ProjectFlow V1.4
+          <br>
+          DX Project Management
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="crumb" id="crumb">
+            Dashboard
+          </div>
+          <div class="muted" id="clock">
+          </div>
+        </header>
+        <section class="content">
+          <div id="dashboard" class="view active">
+  <div class="page-head dashboard-head">
+    <div>
+      <div class="eyebrow">WORKSPACE OVERVIEW</div>
+      <h1>Project Dashboard</h1>
+      <p>ภาพรวมสถานะโครงการ งาน และ Sprint ของทีม DX</p>
+    </div>
+    <div class="dashboard-actions">
+      <button class="btn secondary" onclick="showView('sprints')">
+        <i class="bi bi-calendar3"></i>
+        Sprint
+      </button>
+      <button class="btn" onclick="openProject()">
+        <i class="bi bi-plus-lg"></i>
+        New Project
+      </button>
+    </div>
+  </div>
+
+  <div class="dashboard-kpis" id="stats"></div>
+
+  <div class="dashboard-grid dashboard-grid-main">
+    <section class="panel project-table-panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">PROJECT PORTFOLIO</div>
+          <h3>Recent Projects</h3>
+        </div>
+        <button class="btn secondary btn-sm" onclick="showView('projects')">
+          View all <i class="bi bi-arrow-up-right"></i>
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table class="table dashboard-table">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Progress</th>
+              <th>Structure</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="recent"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel featured-project-panel">
+      <div class="featured-visual">
+        <div class="visual-orb orb-1"></div>
+        <div class="visual-orb orb-2"></div>
+        <div class="visual-grid"></div>
+        <div class="visual-icon"><i class="bi bi-diagram-3"></i></div>
+      </div>
+      <div class="featured-body" id="featuredProject"></div>
+    </section>
+  </div>
+
+  <div class="dashboard-grid dashboard-grid-bottom">
+    <section class="panel dashboard-card">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">CURRENT SPRINT</div>
+          <h3>Sprint Overview</h3>
+        </div>
+        <button class="iconbtn" onclick="showView('sprints')" title="Sprint Management">
+          <i class="bi bi-arrow-up-right"></i>
+        </button>
+      </div>
+      <div class="sprint-overview" id="sprintOverview"></div>
+    </section>
+
+    <section class="panel dashboard-card">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">PROJECT HEALTH</div>
+          <h3>Work Status</h3>
+        </div>
+        <button class="iconbtn" onclick="showView('tracking')" title="Status Tracking">
+          <i class="bi bi-activity"></i>
+        </button>
+      </div>
+      <div class="status-overview" id="statusOverview"></div>
+    </section>
+
+    <section class="panel dashboard-card">
+      <div class="panel-head">
+        <div>
+          <div class="panel-kicker">STRUCTURE</div>
+          <h3>Project Breakdown</h3>
+        </div>
+        <button class="iconbtn" onclick="showView('projects')" title="Project Management">
+          <i class="bi bi-folder2-open"></i>
+        </button>
+      </div>
+      <div class="breakdown-list" id="breakdownList"></div>
+    </section>
+  </div>
+</div>
+
+<div id="projects" class="view">
+            <div class="page-head">
+              <div>
+                <h1>
+                  Project Management
+                </h1>
+                <p>
+                  พื้นที่หลักสำหรับสร้างและบริหารโครงสร้าง Project → Feature → Function → PBI
+                </p>
+              </div>
+              <button class="btn" onclick="openProject()">
+                + New Project
+              </button>
+            </div>
+            <div class="project-shell">
+              <div class="panel">
+                <div class="panel-head">
+                  <h3>
+                    Projects
+                  </h3>
+                </div>
+                <div style="padding:12px">
+                  <input class="search" style="width:100%" id="projectSearch" placeholder="Search project..." oninput="renderProjectList()">
+                </div>
+                <div id="projectList" class="project-sidebar">
+                </div>
+              </div>
+              <div class="panel detail" id="projectDetail">
+                <div class="empty">
+                  เลือก Project จากด้านซ้ายเพื่อเริ่มจัดการ
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="tracking" class="view">
+            <div class="page-head">
+              <div>
+                <h1>
+                  Status Tracking
+                </h1>
+                <p>
+                  มองภาพรวมว่า Feature, Function และ PBI อยู่ขั้นตอนไหน
+                </p>
+              </div>
+              <div style="display:flex;gap:8px">
+                <select class="select" id="trackStatus" onchange="renderTracking()">
+                  <option value="all">
+                    All Status
+                  </option>
+                  <option>
+                    Backlog
+                  </option>
+                  <option>
+                    To Do
+                  </option>
+                  <option>
+                    In Progress
+                  </option>
+                  <option>
+                    Review
+                  </option>
+                  <option>
+                    Done
+                  </option>
+                  <option>
+                    Blocked
+                  </option>
+                </select>
+                <input class="search" id="trackSearch" placeholder="Search..." oninput="renderTracking()">
+              </div>
+            </div>
+            <div class="panel">
+              <div class="table-wrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>
+                        Type
+                      </th>
+                      <th>
+                        Code
+                      </th>
+                      <th>
+                        Name / Title
+                      </th>
+                      <th>
+                        Project
+                      </th>
+                      <th>
+                        Parent
+                      </th>
+                      <th>
+                        Status
+                      </th>
+                      <th>
+                        Priority
+                      </th>
+                      <th>
+                        Sprint
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="trackingBody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div id="sprints" class="view">
+            <div class="page-head">
+              <div>
+                <h1>
+                  Sprint Management
+                </h1>
+                <p>
+                  สร้าง Sprint และเลือก Sprint ที่ทีมจะใช้ทำงานในช่วงเวลาปัจจุบัน
+                </p>
+              </div>
+              <button class="btn" onclick="openSprint()">
+                + New Sprint
+              </button>
+            </div>
+            <div class="row g-3">
+              <div class="col-lg-4">
+                <div class="panel p-3">
+                  <h5 class="mb-2">
+                    Active Sprint
+                  </h5>
+                  <p class="muted small">
+                    เลือก Sprint ที่ทีมกำลังทำอยู่
+                  </p>
+                  <select id="activeSprintSelect" class="form-select mb-3" onchange="setActiveSprint(this.value)">
+                  </select>
+                  <div id="activeSprintInfo" class="small">
+                  </div>
+                </div>
+                <div class="panel p-3 mt-3">
+                  <h5>
+                    กำหนดช่วงเวลา
+                  </h5>
+                  <div class="definition">
+                    <div class="def">
+                      <strong>
+                        Week
+                      </strong>
+                      <span>
+                        เหมาะกับ Sprint 1 สัปดาห์ เช่น Mon–Fri
+                      </span>
+                    </div>
+                    <div class="def">
+                      <strong>
+                        Month
+                      </strong>
+                      <span>
+                        เหมาะกับงานที่วางแผนเป็นรอบเดือน
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="panel">
+                  <div class="panel-head">
+                    <h3>
+                      Sprints
+                    </h3>
+                    <span class="muted" id="sprintCount">
+                    </span>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            Code
+                          </th>
+                          <th>
+                            Sprint
+                          </th>
+                          <th>
+                            Period
+                          </th>
+                          <th>
+                            Date
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="sprintBody">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="team" class="view">
+            <div class="page-head">
+              <div>
+                <div class="eyebrow">TEAM & RESPONSIBILITY</div>
+                <h1>Team & Responsibility</h1>
+                <p>ดูว่าใครรับผิดชอบ Project ไหน และกำหนดบทบาทของแต่ละคน</p>
+              </div>
+              <button class="btn" onclick="openDeveloper()"><i class="bi bi-person-plus"></i> Add Developer</button>
+            </div>
+            <div class="team-grid">
+              <div class="panel">
+                <div class="panel-head">
+                  <div><div class="panel-kicker">PEOPLE</div><h3>Developers</h3></div>
+                  <span class="muted" id="developerCount"></span>
+                </div>
+                <div class="table-wrap"><table class="table"><thead><tr><th>Person</th><th>Role / Title</th><th>Projects</th><th>Status</th><th></th></tr></thead><tbody id="developerBody"></tbody></table></div>
+              </div>
+              <div class="panel responsibility-panel">
+                <div class="panel-head"><div><div class="panel-kicker">RESPONSIBILITY MAP</div><h3>Who works on what?</h3></div></div>
+                <div id="responsibilityMap" class="responsibility-map"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="modal" id="modal">
+      <div class="dialog">
+        <div class="dialog-head">
+          <h3 id="modalTitle">
+            Form
+          </h3>
+          <button class="close" onclick="closeModal()">
+            ×
+          </button>
+        </div>
+        <div class="dialog-body" id="modalBody">
+        </div>
+        <div class="dialog-actions">
+          <button class="btn secondary" onclick="closeModal()">
+            Cancel
+          </button>
+          <button class="btn" onclick="saveModal()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast">
+    </div>
+    <script src="/static/app.js">
+    </script>
+  </body>
+</html>

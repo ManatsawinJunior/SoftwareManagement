@@ -1,0 +1,9 @@
+services:
+  projectflow:
+    build: .
+    container_name: projectflow
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
